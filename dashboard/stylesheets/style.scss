@@ -1,5 +1,5 @@
 @import "variables.scss";
-@import "../../node_modules/bootstrap-sass/lib/bootstrap.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // deployd specific
 .icon-object {
   background-position: -49px -168px;
@@ -72,8 +72,8 @@ p a {
 .panel,
 .well {
   background: rgba(255, 255, 247, 0.05);
-  @include box-shadow(none);
-  @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .25));
+  box-shadow: none;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .25);
   border: solid 1px rgba(0, 0, 0, .5);
 }
 
@@ -92,8 +92,7 @@ h3 {
 table,
 th,
 tr,
-td,
-{
+td {
   border-color: $black !important;
 }
 
@@ -144,11 +143,11 @@ td {
     top: -2px;
   }
   margin-bottom: 0;
-  @include border-radius(10px 10px 10px 10px);
+  border-radius: 10px 10px 10px 10px;
   li {
     position: relative;
     padding: 10px;
-    @include box-shadow(inset 3px 3px 40px rgba(0, 0, 0, .37));
+    box-shadow: inset 3px 3px 40px rgba(0, 0, 0, .37);
     margin-bottom: 0px;
     border-top: solid 1px darken($black, 10%);
     border-left: solid 1px darken($black, 10%);
@@ -177,7 +176,7 @@ td {
         top: -1px;
       }
       padding: 5px;
-      @include box-shadow(none);
+      box-shadow: none;
       background: rgba(0, 0, 0, 0.3);
       margin-left: 14px;
       margin-right: 14px; // text-align: center;
@@ -185,7 +184,7 @@ td {
 
     &.group-type {
       color: white;
-      @include box-shadow(inset 3px 3px 40px rgba(0, 0, 0, .37));
+      box-shadow: inset 3px 3px 40px rgba(0, 0, 0, .37);
       background-color: #1a1a1a;
     }
   }
@@ -256,7 +255,7 @@ td {
 
 ::-webkit-scrollbar-thumb {
   background: darken($black, 20%);
-  @include border-radius(5px);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-corner {
@@ -350,18 +349,23 @@ textarea.full-width {
 }
 
 i.icon-custom {
-  @extend .icon-asterisk;
+  @extend .glyphicon;
+  @extend .glyphicon-asterisk;
   &.boolean {
-    @extend .icon-ok-sign;
+    @extend .glyphicon;
+    @extend .glyphicon-ok;
   }
   &.string {
-    @extend .icon-font;
+    @extend .glyphicon;
+    @extend .glyphicon-font;
   }
   &.number {
-    @extend .icon-plus-sign;
+    @extend .glyphicon;
+    @extend .glyphicon-plus;
   }
   &.date {
-    @extend .icon-time;
+    @extend .glyphicon;
+    @extend .glyphicon-time;
   }
   &.object {
     @extend .icon-object;
@@ -370,30 +374,38 @@ i.icon-custom {
     @extend .icon-array;
   }
   &.password {
-    @extend .icon-asterisk;
+    @extend .glyphicon;
+    @extend .glyphicon-asterisk;
   }
   &.files,
   &.static {
-    @extend .icon-folder-close;
+    @extend .glyphicon;
+    @extend .glyphicon-folder-close;
   }
   &.collection {
-    @extend .icon-th-list;
+    @extend .glyphicon;
+    @extend .glyphicon-list;
   }
   &.users-collection,
   &.usercollection {
-    @extend .icon-user;
+    @extend .glyphicon;
+    @extend .glyphicon-user;
   }
   &.properties {
-    @extend .icon-list;
+    @extend .glyphicon;
+    @extend .glyphicon-list;
   }
   &.data {
-    @extend .icon-list-alt;
+    @extend .glyphicon;
+    @extend .glyphicon-list-alt;
   }
   &.events {
-    @extend .icon-exclamation-sign;
+    @extend .glyphicon;
+    @extend .glyphicon-exclamation-sign;
   }
   &.api {
-    @extend .icon-info-sign;
+    @extend .glyphicon;
+    @extend .glyphicon-info-sign;
   }
 }
 
@@ -448,7 +460,7 @@ li.component-type-item {
       position: absolute;
       top: 50%;
       left: 0;
-      right: 0; //border-top: #ddd 2px dotted; 
+      right: 0; //border-top: #ddd 2px dotted;
       height: 20px; // background-color: #eee;
       cursor: ns-resize;
       &:after {
@@ -512,7 +524,7 @@ li.component-type-item {
   background: url(../img/fabric.png);
   margin-bottom: 4px;
   min-height: 19px;
-  @include border-radius(3px);
+  border-radius: 3px;
   &.highlight {
     border-color: $linkColor;
     color: $linkColor;
@@ -546,12 +558,18 @@ li.component-type-item {
 }
 
 .component-item-edit {
-  @include display-box();
-  @include box-orient(horizontal);
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
   width: 100%;
   input[type="text"] {
     width: 50px !important;
-    @include box-flex(1);
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
     display: block;
   }
   input[type="text"],
@@ -572,7 +590,7 @@ li.component-item {
   margin-bottom: 4px; // background: rgba(255, 255, 255, 0.1);
   // background: rgba(66, 152, 153, 0.1);
   background: url(../img/fabric.png);
-  @include box-shadow(inset 1px 1px 10px rgba(0, 0, 0, .5));
+  box-shadow: inset 1px 1px 10px rgba(0, 0, 0, .5);
   color: $bodyBackground;
   border-radius: 3px; // border: solid 1px $textColor;
   border-top: solid 1px rgba(0, 0, 0, .7);
@@ -617,7 +635,7 @@ li.component-item {
     }
   }
   .detail {
-    @include border-radius(0px 0px 3px 3px);
+    border-radius: 0px 0px 3px 3px;
     padding: 10px;
     color: $bodyBackground;
   }
@@ -681,12 +699,78 @@ table input {
   margin-left: 10px;
   margin-top: 6px;
   i {
-    @extend .icon-white;
+    @extend .glyphicon;
+    color: white;
   }
 }
 
 #file-nav {
   margin-bottom: 20px;
+}
+
+// Mobile touch support for table editing
+@media (max-width: 768px) {
+  .name,
+  .path {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &.touch-active {
+      border: dashed 1px $black !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      color: $white !important;
+      margin-left: 0 !important;
+      padding: 5px !important;
+    }
+  }
+
+  .component-item-header {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .mobile-edit-input {
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 14px !important;
+
+    &:focus {
+      outline: none;
+      border-color: #007acc !important;
+      box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+    }
+  }
+
+  // Improve touch targets for mobile
+  .resource a,
+  .options {
+    min-height: 44px;
+    padding: 12px 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  // Better spacing for mobile
+  .component-item {
+    margin-bottom: 8px;
+
+    .component-item-header {
+      padding: 12px 10px;
+      min-height: 44px;
+    }
+  }
 }
 
 .file-list .container {
@@ -766,7 +850,7 @@ table input {
   background: rgba(0, 0, 0, 0.25);
   padding: 20px;
   margin: 0;
-  @include border-radius(5px);
+  border-radius: 5px;
 }
 
 #events-panel {}

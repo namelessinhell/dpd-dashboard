@@ -4,22 +4,34 @@ html {
 
 body {
   min-height: 100%;
-  @include display-box();
-  @include box-orient(vertical);
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
   width: 100%;
 }
 
 #header {
   // background: none !important;
   background: rgba(33, 33, 33, 0.5) url(../img/fabric.png) !important;
-  @include box-shadow(inset 1px 1px 10px rgba(0, 0, 0, .5)); // background: !important;
+  box-shadow: inset 1px 1px 10px rgba(0, 0, 0, .5); // background: !important;
   border-bottom: 1px solid #111111;
   padding: 0 22px;
-  @include display-box();
-  @include box-orient(horizontal);
-  @include box-align(center);
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
   .seperator {
-    @include box-flex(1);
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
   }
   h1,
   h2 {
@@ -37,9 +49,15 @@ body {
   min-height: 100%;
   width: 100%;
   min-width: 1000px;
-  @include box-sizing(border-box);
-  @include box-flex(1);
-  @include display-box();
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
 }
 
 #resource-sidebar-container {
@@ -48,27 +66,43 @@ body {
 }
 
 #main-container {
-  @include box-flex(1);
-  @include display-box();
-  @include box-orient(vertical);
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
   width: 100%;
 }
 
 .section-header {
-  @include display-box();
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
   width: 100%;
   margin-bottom: 10px;
   h3 {
     vertical-align: middle;
-    @include box-flex(1);
-    @include display-box();
-    @include box-align(center);
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
     margin: 0 !important;
   }
 }
 
 #main-container .well.full-page {
-  @include box-flex(1);
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
 }
 
 .well h3 {
@@ -83,11 +117,17 @@ body {
 }
 
 .two-column-container {
-  @include display-box();
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
   width: 100%;
-  @include box-sizing(border-box);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   .main-column {
-    @include box-flex(1);
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
   }
   .sidebar-column {
     margin-left: 10px;

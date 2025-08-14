@@ -8,15 +8,15 @@
     "url": "git://github.com/deployd/dpd-dashboard.git"
   },
   "dependencies": {
-    "async": "^2.0.1",
-    "dpd-clientlib": "^0.8.9",
-    "ejs": "^2.5.1",
-    "filed-mimefix": "^0.1.0"
+    "async": "^3.2.6",
+    "dpd-clientlib": "^1.0.0",
+    "ejs": "^3.1.10",
+    "filed-mimefix": "^0.1.3"
   },
   "devDependencies": {
-    "bootstrap-sass": "^2.3.2",
-    "node-sass": "^4.5.3",
-    "standard-version": "^4.2.0"
+    "bootstrap-sass": "^3.4.3",
+    "sass": "^1.69.0",
+    "standard-version": "^9.5.0"
   },
   "bugs": {
     "url": "https://github.com/deployd/dpd-dashboard/issues"
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/deployd/dpd-dashboard",
   "main": "dashboard.js",
   "scripts": {
-    "prepublish": "node-sass dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
+    "prepublish": "sass dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "standard-version"
   },
