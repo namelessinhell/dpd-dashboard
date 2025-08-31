@@ -1,4 +1,7 @@
-.ace-deployd .ace_editor {
+@use "variables" as *;
+@use "color-utils" as *;
+
+ .ace-deployd .ace_editor {
   border: 2px solid rgb(159, 159, 159);
 }
 

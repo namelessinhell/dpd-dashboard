@@ -12,7 +12,7 @@ function createForm() {
       , $input = $prop.find('#prop-' + s.name);
 
     if (s.type === "checkbox") {
-      $input.attr('checked', data[s.name]);
+      $input.prop('checked', !!data[s.name]);
     } else {
       $input.val(data[s.name]);  
     }
@@ -45,7 +45,7 @@ function getValue($input) {
 }
 
 function watchChange(prop, value) {
-  $('#save-button').removeAttr('disabled');
+  $('#save-button').prop('disabled', false);
   // if (timeouts[prop]) clearTimeout(timeouts[prop]);
   // timeouts[prop] = setTimeout(function() {
   //   change(prop, value);
@@ -61,7 +61,7 @@ function save() {
     if (err) { ui.error("Error saving", err.message).effect('slide').closable(); }
     else {
       ui.notify("Saved").hide(1000).effect('slide');
-      $('#save-button').attr('disabled', true);
+      $('#save-button').prop('disabled', true);
     }
   });
 }
@@ -77,7 +77,7 @@ $('#cancel-button').click(function() {
 });
 
 window.onbeforeunload = function() {
-  if (!$('#save-button').attr('disabled')) {
+  if (!$('#save-button').prop('disabled')) {
     return "You have unsaved changes to this resource.";
   }
 };

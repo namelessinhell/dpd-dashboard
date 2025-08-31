@@ -9,6 +9,11 @@ var util = require('util')
   , loadTypes = require('deployd/lib/type-loader')
   , async = require('async');
 
+// Node >= 14: fs.exists is deprecated; provide a boolean-style helper
+function fileExists(p, cb) {
+  fs.access(p, fs.constants.F_OK, function(err) { cb(!err); });
+}
+
 function Dashboard(name, options) {
   // internal resource
   this.internal = true;
@@ -166,7 +171,7 @@ Dashboard.prototype.loadPage = function(ctx, fn) {
         function(fn) {
           if (dashboardPath) {
             pagePath = path.join(dashboardPath, page + '.html');
-            fs.exists(pagePath, function(exists) {
+            fileExists(pagePath, function(exists) {
               fn(null, exists);
             });
           } else {
@@ -224,7 +229,7 @@ Dashboard.prototype.loadAdvancedDashboard = function(data, fn) {
         });
       }
 
-      fs.exists(path.join(dashboardPath, 'js', page + '.js'), function(exists) {
+      fileExists(path.join(dashboardPath, 'js', page + '.js'), function(exists) {
         if (exists) {
           options.scripts.push('/__custom/' + resourceType.name.toLowerCase() + '/js/' + page + '.js');
         }
@@ -234,7 +239,7 @@ Dashboard.prototype.loadAdvancedDashboard = function(data, fn) {
     },
 
     stylesheet: function(fn) {
-      fs.exists(path.join(resourceType.dashboard.path, 'style.css'), function(exists) {
+      fileExists(path.join(resourceType.dashboard.path, 'style.css'), function(exists) {
         if (exists) {
           options.css = '/__custom/' + resourceType.name.toLowerCase() + '/style.css';
         }

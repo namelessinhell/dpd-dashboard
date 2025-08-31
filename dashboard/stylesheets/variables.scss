@@ -1,3 +1,5 @@
+@use "color-utils" as *;
+
 // Variables.less
 // Variables to customize the look and feel of Bootstrap
 // -----------------------------------------------------
@@ -120,11 +122,6 @@ $zindexFixedNavbar:       1030;
 $zindexModalBackdrop:     1040;
 $zindexModal:             1050;
 
-
-// Sprite icons path
-// -------------------------
-$iconSpritePath:          "../img/glyphicons-halflings.png";
-$iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
 
 
 // Input placeholder text color

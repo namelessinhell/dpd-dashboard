@@ -1,0 +1,28 @@
+@use "sass:color";
+@use "sass:math";
+
+// Modern color helpers to replace deprecated global functions
+@function lighten($c, $amount) {
+  @return color.adjust($c, $lightness: $amount);
+}
+
+@function darken($c, $amount) {
+  @return color.adjust($c, $lightness: -$amount);
+}
+
+@function desaturate($c, $amount) {
+  @return color.adjust($c, $saturation: -$amount);
+}
+
+// Backwards-compatible adjust-hue wrapper
+@function adjust-hue($c, $amount) {
+  $deg: null;
+  @if math.unit($amount) == "%" {
+    $deg: math.div($amount, 100%) * 360deg;
+  } @else if math.unit($amount) == "" {
+    $deg: $amount * 1deg;
+  } @else {
+    $deg: $amount;
+  }
+  @return color.adjust($c, $hue: $deg);
+}

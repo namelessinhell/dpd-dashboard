@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "color-utils" as *;
+
 .pln {
   color: $white;
 }

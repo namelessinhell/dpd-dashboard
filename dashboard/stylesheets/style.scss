@@ -1,22 +1,17 @@
-@import "variables.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-// deployd specific
-.icon-object {
-  background-position: -49px -168px;
-}
+@use "color-utils" as *;
+@use "variables" as *;
+@use "../../node_modules/bootstrap/scss/bootstrap" as bs;
+@use "mixins";
+@use "layout";
+@use "editor";
+@use "prettify";
+@use "ui";
 
-.icon-array {
-  background-position: -71px -168px
-}
+// deployd specific (icon classes removed; using Bootstrap Icons instead)
 
-// editor
-@import "mixins.scss";
-@import "layout.scss";
-@import "editor.scss";
-@import "prettify.scss";
-@import "ui.scss";
 body {
   background: url(../img/outlets.png) #030202;
+  color: $white;
 }
 
 .label {
@@ -68,6 +63,47 @@ p a {
   width: 443px;
 }
 
+// Sidebar polish: active, hover, and keyboard focus
+#resource-sidebar {
+  li.resource > a {
+    display: block;
+    padding: 6px 8px;
+    border-left: 3px solid transparent;
+    transition: background .15s ease, color .15s ease, border-left-color .15s ease;
+  }
+  li.resource > a:hover {
+    background: lighten($black, 5%);
+    color: $bodyBackground;
+  }
+  li.resource.active > a {
+    border-left-color: $blue;
+    background: lighten($black, 7%);
+    color: $bodyBackground;
+    font-weight: bold;
+  }
+  li.resource.nav-focus > a {
+    border-left-color: lighten($blue, 10%);
+    background: lighten($black, 9%);
+    color: $bodyBackground;
+  }
+  li.resource > a:focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+  }
+}
+
+// Sidebar search field in dark theme
+#resource-sidebar-container .input-group .form-control {
+  background: darken($black, 10%);
+  color: $white;
+  border-color: darken($black, 20%);
+}
+#resource-sidebar-container .input-group .input-group-text {
+  background: darken($black, 15%);
+  color: $white;
+  border-color: darken($black, 20%);
+}
+
 // DARK CHANGES
 .panel,
 .well {
@@ -80,6 +116,158 @@ p a {
 .alert {
   margin-bottom: 10px;
 }
+
+// Accessibility: increase contrast for dark theme
+// Links
+a {
+  color: lighten($blue, 20%);
+}
+a:hover,
+a:focus {
+  color: lighten($blue, 30%);
+  text-decoration: underline;
+}
+
+// Dark containers
+.panel,
+.well,
+.notification,
+#events,
+#default-editor,
+#basic-dashboard {
+  color: $white;
+}
+
+// Inputs on dark backgrounds
+input,
+textarea,
+select {
+  background: #1b1b1b;
+  color: $white;
+  border-color: #444;
+}
+input::placeholder,
+textarea::placeholder {
+  color: lighten($white, 35%);
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: lighten($blue, 10%);
+  box-shadow: 0 0 0 2px rgba(66, 158, 150, 0.35);
+}
+
+// Tables
+table,
+th,
+tr,
+td {
+  border-color: #444 !important;
+}
+td,
+th {
+  color: $white !important;
+}
+.table-striped tbody tr:nth-child(odd) td,
+.table-striped tbody tr:nth-child(odd) th {
+  background-color: #121212;
+}
+.table-striped tbody tr:nth-child(even) td,
+.table-striped tbody tr:nth-child(even) th {
+  background-color: #0d0d0d;
+}
+
+// Event tabs
+#event-nav a {
+  color: lighten($blue, 15%);
+}
+#event-nav a:hover,
+#event-nav a:focus {
+  color: lighten($blue, 30%);
+}
+
+// Focus visibility for interactive elements
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid lighten($blue, 10%);
+  outline-offset: 2px;
+}
+
+// Respect system high-contrast preference
+@media (prefers-contrast: more) {
+  a { color: lighten($blue, 35%); }
+  .panel, .well, .notification { border-color: #666; }
+  input, textarea, select { border-color: #666; }
+}
+
+// Component-specific contrast tuning
+
+// Alerts (support both legacy and Bootstrap 5 variants)
+.alert,
+.alert-info,
+.alert-success,
+.alert-warning,
+.alert-danger,
+.alert-primary,
+.alert-secondary,
+.alert-dark,
+.alert-light {
+  color: $white;
+  border-color: #3a3a3a;
+  background-color: #1a1a1a;
+}
+.alert-info { border-left: 4px solid lighten($blue, 10%); }
+.alert-success { border-left: 4px solid lighten($green, 10%); }
+.alert-warning { border-left: 4px solid $yellow; color: #111; background-color: #ffe9a6; }
+.alert-danger, .alert-error { border-left: 4px solid lighten($red, 5%); }
+.alert-primary { border-left: 4px solid lighten($blue, 5%); }
+.alert-secondary { border-left: 4px solid #888; }
+.alert-dark { border-left: 4px solid #bbb; }
+.alert-light { border-left: 4px solid #666; color: #111; }
+
+// Dropdown menus
+.dropdown-menu {
+  background-color: #161616;
+  border-color: #2e2e2e;
+}
+.dropdown-menu .dropdown-item {
+  color: $white;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #262626;
+  color: $white;
+}
+.dropdown-divider { border-top-color: #2e2e2e; }
+
+// Buttons
+.btn {
+  border-width: 1px;
+}
+.btn-primary { background-color: $blue; border-color: lighten($blue, 5%); }
+.btn-primary:hover { background-color: lighten($blue, 5%); border-color: lighten($blue, 10%); }
+.btn-success { background-color: $green; border-color: lighten($green, 5%); }
+.btn-success:hover { background-color: lighten($green, 5%); border-color: lighten($green, 10%); }
+.btn-secondary { background-color: #2a2a2a; border-color: #3a3a3a; color: $white; }
+.btn-secondary:hover { background-color: #343434; }
+
+// Modal polish (for auth.html static modal)
+.modal {
+  background-color: #111;
+  color: $white;
+}
+.modal .modal-header,
+.modal .modal-footer { border-color: #2a2a2a; }
+.modal .modal-body { color: $white; }
+
+// Tooltips
+.tooltip .tooltip-inner {
+  background-color: #222;
+  color: $white;
+}
+.tooltip .tooltip-arrow::before { border-bottom-color: #222 !important; }
 
 .well {
   padding: 10px 20px 20px;
@@ -348,66 +536,7 @@ textarea.full-width {
   }
 }
 
-i.icon-custom {
-  @extend .glyphicon;
-  @extend .glyphicon-asterisk;
-  &.boolean {
-    @extend .glyphicon;
-    @extend .glyphicon-ok;
-  }
-  &.string {
-    @extend .glyphicon;
-    @extend .glyphicon-font;
-  }
-  &.number {
-    @extend .glyphicon;
-    @extend .glyphicon-plus;
-  }
-  &.date {
-    @extend .glyphicon;
-    @extend .glyphicon-time;
-  }
-  &.object {
-    @extend .icon-object;
-  }
-  &.array {
-    @extend .icon-array;
-  }
-  &.password {
-    @extend .glyphicon;
-    @extend .glyphicon-asterisk;
-  }
-  &.files,
-  &.static {
-    @extend .glyphicon;
-    @extend .glyphicon-folder-close;
-  }
-  &.collection {
-    @extend .glyphicon;
-    @extend .glyphicon-list;
-  }
-  &.users-collection,
-  &.usercollection {
-    @extend .glyphicon;
-    @extend .glyphicon-user;
-  }
-  &.properties {
-    @extend .glyphicon;
-    @extend .glyphicon-list;
-  }
-  &.data {
-    @extend .glyphicon;
-    @extend .glyphicon-list-alt;
-  }
-  &.events {
-    @extend .glyphicon;
-    @extend .glyphicon-exclamation-sign;
-  }
-  &.api {
-    @extend .glyphicon;
-    @extend .glyphicon-info-sign;
-  }
-}
+/* Icon styles now use Bootstrap Icons via <i class="bi bi-*"></i> */
 
 li.component-type-item {
   list-style: none;
@@ -695,14 +824,13 @@ table input {
   width: 16%;
 }
 
-#file-status {
-  margin-left: 10px;
-  margin-top: 6px;
-  i {
-    @extend .glyphicon;
-    color: white;
+  #file-status {
+    margin-left: 10px;
+    margin-top: 6px;
+    i {
+      color: white;
+    }
   }
-}
 
 #file-nav {
   margin-bottom: 20px;

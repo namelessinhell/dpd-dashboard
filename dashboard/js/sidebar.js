@@ -19,9 +19,109 @@ $(document).ready(function() {
   loadResources();
   setupMobileTouchHandlers();
 
+  // Quick client-side filter for resources
+  $('#resource-sidebar-container').on('input', '#resource-search', function() {
+    var q = ($(this).val() || '').toLowerCase();
+    var $items = $('#resource-sidebar li.resource');
+    if (!q) { $items.show(); return; }
+    $items.each(function() {
+      var $a = $(this).find('> a').first();
+      var text = ($a.text() || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      $(this).toggle(text.indexOf(q) !== -1);
+    });
+  });
+
   $('#resource-types').on('click', 'a', function() {
     createResource($(this).attr('data-id'));
   });
+
+  // Keyboard shortcuts
+  // - '/' focuses the resource filter
+  // - 'j'/'k' navigate visible resources
+  // - 'Enter' opens the focused resource
+  (function initKeyboardShortcuts() {
+    var navIndex = -1;
+
+    function isTypingContext(e) {
+      var tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return true;
+      if ($(e.target).closest('.ace_editor').length) return true;
+      return false;
+    }
+
+    function visibleItems() {
+      return $('#resource-sidebar li.resource:visible');
+    }
+
+    function currentIndex() {
+      var $items = visibleItems();
+      var idx = -1;
+      $items.each(function(i) {
+        if ($(this).hasClass('nav-focus')) idx = i;
+      });
+      if (idx === -1) {
+        $items.each(function(i) { if ($(this).hasClass('active')) { idx = i; return false; } });
+      }
+      return idx;
+    }
+
+    function applyFocus(index) {
+      var $items = visibleItems();
+      $items.removeClass('nav-focus');
+      if (index >= 0 && index < $items.length) {
+        var $el = $($items.get(index));
+        $el.addClass('nav-focus');
+        var top = $el.position().top, cont = $('#resource-sidebar-container .well');
+        if (top < 0 || top > cont.height() - 40) {
+          cont.scrollTop(cont.scrollTop() + top - 20);
+        }
+      }
+    }
+
+    $(document).on('keydown', function(e) {
+      if (isTypingContext(e)) return; // don't hijack typing contexts
+
+      // Focus filter
+      if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        var $f = $('#resource-search');
+        if ($f.length) {
+          e.preventDefault();
+          $f.focus().select();
+        }
+        return;
+      }
+
+      // Navigation
+      if ((e.key === 'j' || e.key === 'k' || e.key === 'Enter') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        var $items = visibleItems();
+        if (!$items.length) return;
+
+        if (e.key === 'j') {
+          e.preventDefault();
+          var idx = currentIndex();
+          navIndex = (idx + 1) % $items.length;
+          applyFocus(navIndex);
+          return;
+        }
+        if (e.key === 'k') {
+          e.preventDefault();
+          var idx2 = currentIndex();
+          navIndex = (idx2 <= 0 ? $items.length - 1 : idx2 - 1);
+          applyFocus(navIndex);
+          return;
+        }
+        if (e.key === 'Enter') {
+          var idx3 = currentIndex();
+          if (idx3 >= 0) {
+            e.preventDefault();
+            var href = $($items.get(idx3)).find('> a').attr('href');
+            if (href) { window.location.href = href; }
+          }
+          return;
+        }
+      }
+    });
+  })();
 
   // Add mobile touch event handlers for table column editing
   function setupMobileTouchHandlers() {
