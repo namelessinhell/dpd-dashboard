@@ -10,27 +10,43 @@
   </head>
   <body>
 
-    <div class="modal" id="authModal">
-      <div class="modal-header">
-        <h3>Deployd Dashboard</h3>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-error hide" id="error">That key is invalid</div>
-        <div class="alert alert-info">Use <code>dpd showkey</code> to get your app's key.</div>
-        <p>Authenticate with your deployd dashboard:</p>
-        <form>
-            
-            <label>Authentication key: <textarea class="full-width" rows="6" name="key"></textarea></label>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn btn-primary save">Authenticate</a>
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="authModalLabel">Deployd Dashboard</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger hide" id="error">That key is invalid</div>
+            <div class="alert alert-info">Use <code>dpd showkey</code> to get your app's key.</div>
+            <p>Authenticate with your deployd dashboard:</p>
+            <label class="form-label">Authentication key:</label>
+            <textarea class="form-control" rows="6" name="key"></textarea>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-primary save">Authenticate</a>
+          </div>
+        </div>
       </div>
     </div>
 
     <script type="text/javascript" src="/dashboard/js/lib/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="/dashboard/js/lib/jquery.cookie-1.4.1.min.js"></script>
     <script type="text/javascript" src="/dpd.js"></script>
+    <script type="text/javascript" src="/dashboard/js/lib/bootstrap-5.3.3.bundle.min.js"></script>
     <script type="text/javascript" src="/dashboard/js/auth.js"></script>
+    <script>
+      // Auto-show the auth modal using Bootstrap 5 when page loads
+      (function() {
+        if (window.bootstrap && document.getElementById('authModal')) {
+          try { new bootstrap.Modal(document.getElementById('authModal'), { backdrop: 'static' }).show(); } catch (e) {}
+        } else {
+          // Fallback: ensure modal is visible if Bootstrap isn't available
+          var m = document.getElementById('authModal');
+          if (m) { m.classList.add('show'); m.style.display = 'block'; }
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -39,7 +39,7 @@
               <a class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" href="#" data-bs-title="Create resource">
                 <i class="bi bi-plus-lg"></i>
               </a>
-              <ul id="resource-types" class="dropdown-menu">
+              <ul id="resource-types" class="dropdown-menu" aria-labelledby="add-resource-btn">
               </ul>
             </div>
           </div>
@@ -118,7 +118,7 @@
              else if (tt.indexOf('file') !== -1 || tt.indexOf('static') !== -1) ti = 'folder';
              else if (tt.indexOf('event') !== -1) ti = 'lightning';
              else if (tt.indexOf('data') !== -1) ti = 'list-ul'; %>
-          <a href="#" data-id="<%= type.id %>">
+          <a href="#" class="dropdown-item" data-id="<%= type.id %>">
             <i class="bi bi-<%= ti %>"></i>
             <%- type.label || type.type %>
           </a>
@@ -129,7 +129,9 @@
     <script type="text/html" id="event-editor-template">
       <ul class="nav nav-tabs" id="event-nav">
         <% events.forEach(function(e, i) { %>
-          <li <%= i === 0 ? 'class="active"' : '' %>><a href="#<%- e.toLowerCase() %>-panel" data-bs-toggle='tab' data-editor="<%- e %>">On <%- e %></a></li>
+          <li class="nav-item <%= i === 0 ? 'active' : '' %>">
+            <a class="nav-link <%= i === 0 ? 'active' : '' %>" href="#<%- e.toLowerCase() %>-panel" data-bs-toggle='tab' data-editor="<%- e %>">On <%- e %></a>
+          </li>
         <% }) %>
       </ul>
       <div class="tab-content tab-content-styled">
