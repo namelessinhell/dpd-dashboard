@@ -149,3 +149,6 @@
   }
 
 })(window.jQuery, window.bootstrap);
+\r\n(function($){\r\n  if(!$) return;\r\n  if(!$.clean){\r\n    $.clean = function(elems, context, fragment, scripts){\r\n      context = context || document;\r\n      var ret = [];\r\n      if (!Array.isArray(elems)) elems = elems != null ? [elems] : [];\r\n      elems.forEach(function(elem){\r\n        if (typeof elem === 'string'){\r\n          var container = context.createElement('div');\r\n          container.innerHTML = elem;\r\n          var children = container.childNodes ? Array.prototype.slice.call(container.childNodes) : [];\r\n          Array.prototype.push.apply(ret, children);\r\n        } else if (typeof Node !== 'undefined' && elem instanceof Node){\r\n          ret.push(elem);\r\n        }\r\n      });\r\n      if (fragment && fragment.appendChild){\r\n        ret.forEach(function(node){ fragment.appendChild(node); });\r\n      }\r\n      if (Array.isArray(scripts)){ scripts.length = 0; }\r\n      return ret;\r\n    };\r\n  }\r\n})(window.jQuery);\r\n
+
+
