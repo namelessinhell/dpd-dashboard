@@ -7,7 +7,6 @@
     <!-- <script type="text/javascript" src="/dashboard/js/lib/less-1.3.0.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-5.3.3.min.css" />
     <link rel='stylesheet' type="text/css" href='/dashboard/stylesheets/style.css?<?- version ?>' />
-    <link rel='stylesheet' type="text/css" href='/dashboard/css/bootstrap-icons.css?<?- version ?>' />
     <link href='//fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
     <? if (css) { ?>
       <link href="/dashboard<?- css ?>" rel="stylesheet" type="text/css" />
@@ -23,40 +22,30 @@
       <h1></h1>
       <div class="seperator">&nbsp;</div>
       <div class="btn-group" id="open-btn-group">
-        <a class="btn btn-outline-light" href="#" id="open-btn" target="_blank" data-bs-title="Open app in new tab"><i class="bi bi-eye"></i> Open</a>
+        <a class="btn" href="#" id="open-btn" target="_blank"><i class="icon-eye-open"></i> Open</a>
         <!-- <button class="btn dropdown-toggle"><span class="caret"></span></button> -->
       </div>
       <!-- <div class="btn-group" id="deploy-btn-group">
-        <button class="btn"><i class="bi bi-upload"></i> Deploy</button>
-        <button class="btn dropdown-toggle"><i class="bi bi-caret-down-fill"></i></button>
+        <button class="btn"><i class="icon-upload"></i> Deploy</button>
+        <button class="btn dropdown-toggle"><span class="caret"></span></button>
       </div> -->
     </div>
     <div id="body-container">
-      <div id="resource-sidebar-container">
+      <div id="resource-sidebar-container"> 
         <div class="well hide">
           <div class="section-header">
             <h3>Resources</h3>
             <div class="btn-group">
-              <a class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" href="#" data-bs-title="Create resource">
-                <i class="bi bi-plus-lg"></i>
+              <a class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                <i class="icon-white icon-plus"></i>
+                &nbsp;<span class="caret"></span>
               </a>
-              <ul id="resource-types" class="dropdown-menu" aria-labelledby="add-resource-btn">
+              <ul id="resource-types" class="dropdown-menu">
               </ul>
             </div>
           </div>
-          <div class="mb-2" aria-label="Filter resources">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text"><i class="bi bi-search"></i></span>
-              <input id="resource-search" type="text" class="form-control" placeholder="Filter resources..." autocomplete="off" />
-            </div>
-            <div class="d-flex justify-content-end mt-1">
-              <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#shortcut-help" aria-label="Show keyboard shortcuts">
-                <i class="bi bi-question-circle"></i>
-              </button>
-            </div>
-          </div>
           <div id="resources-empty" class="alert alert-info hide">Add a resource to get started</div>
-          <ul class="nav nav-stacked flex-column type-icons" id="resource-sidebar">
+          <ul class="nav nav-stacked type-icons" id="resource-sidebar">
           </ul>
         </div>
       </div>
@@ -76,17 +65,7 @@
 
         <li class="resource" <%= isCurrent ? 'class="active"' : '' %>>
           <a href="/dashboard/<%= resource.id %>" <%= type && type.dashboardPages ? 'class="pages-header"' : '' %>>
-            <% var rt = (resource.type || '').toLowerCase(); var icon = 'folder';
-               if (rt === 'collection') icon = 'collection';
-               else if (rt === 'users-collection' || rt === 'usercollection' || rt === 'users') icon = 'people';
-               else if (rt === 'files' || rt === 'static') icon = 'folder';
-               else if (rt === 'string') icon = 'type';
-               else if (rt === 'number') icon = '123';
-               else if (rt === 'date') icon = 'calendar';
-               else if (rt === 'boolean') icon = 'check';
-               else if (rt === 'object' || rt === 'properties') icon = 'braces';
-               else if (rt === 'data') icon = 'list-ul'; %>
-            <i class="bi bi-<%= icon %>"></i>&nbsp;
+            <i class="icon-white icon-custom <%- resource.type.toLowerCase() %>"></i>&nbsp;
             <% resource.id.split('/').forEach(function(part, index) { %>
               <span><%- part %></span>
               <% if(index !== resource.id.split('/').length - 1) { %>
@@ -94,15 +73,11 @@
               <% } %>
             <% }); %>
           </a>
-          <a href="#" class="options" data-bs-title="Resource actions"><i class="bi bi-caret-down-fill"></i></a>
+          <a href="#" class="options"><span class="caret"></span></a>
           <% if (type && type.dashboardPages) { %>
-            <ul class="nav flex-column pages type-icons <%= isCurrent ? '' : 'hide' %>">
+            <ul class="nav pages type-icons <%= isCurrent ? '' : 'hide' %>">
               <% type.dashboardPages.forEach(function(p) { %>
-                <% var pl = p.toLowerCase(); var pi = 'file-earmark-text';
-                   if (pl === 'events') pi = 'lightning';
-                   else if (pl === 'data') pi = 'list-ul';
-                   else if (pl === 'properties' || pl === 'config') pi = 'gear'; %>
-                <li <%- isCurrent && (Context.page || '').toLowerCase() === p.toLowerCase() ? 'class=active' : ''%>  ><a href="/dashboard/<%= resource.id %>/<%= p.toLowerCase() %>/"><i class="bi bi-<%= pi %>"></i> <%= p %></a></li>
+                <li <%- isCurrent && (Context.page || '').toLowerCase() === p.toLowerCase() ? 'class=active' : ''%>  ><a href="/dashboard/<%= resource.id %>/<%= p.toLowerCase() %>/"><i class="icon-white icon-custom <%= p.toLowerCase() %>"></i> <%= p %></a></li>
               <% }); %>
             </ul>
           <% } %>
@@ -113,14 +88,8 @@
     <script type="text/html" id="resource-types-template">
       <% types.forEach(function(type) { %>
          <li>
-          <% var tt = (type.label || type.type).toLowerCase(); var ti = 'folder';
-             if (tt.indexOf('user') !== -1) ti = 'people';
-             else if (tt.indexOf('collection') !== -1) ti = 'collection';
-             else if (tt.indexOf('file') !== -1 || tt.indexOf('static') !== -1) ti = 'folder';
-             else if (tt.indexOf('event') !== -1) ti = 'lightning';
-             else if (tt.indexOf('data') !== -1) ti = 'list-ul'; %>
-          <a href="#" class="dropdown-item" data-id="<%= type.id %>">
-            <i class="bi bi-<%= ti %>"></i>
+          <a href="#" data-id="<%= type.id %>">
+            <i class="<%= (type.label || type.type).toLowerCase().replace(' ', '-') %> icon-custom"></i>
             <%- type.label || type.type %>
           </a>
          </li>
@@ -130,14 +99,12 @@
     <script type="text/html" id="event-editor-template">
       <ul class="nav nav-tabs" id="event-nav">
         <% events.forEach(function(e, i) { %>
-          <li class="nav-item <%= i === 0 ? 'active' : '' %>">
-            <a class="nav-link <%= i === 0 ? 'active' : '' %>" href="#<%- e.toLowerCase() %>-panel" data-bs-toggle='tab' data-editor="<%- e %>">On <%- e %></a>
-          </li>
+          <li class="nav-item"><a class="nav-link <%= i === 0 ? 'active' : '' %>" href="#<%- e.toLowerCase() %>-panel" data-bs-toggle='tab' data-editor="<%- e %>">On <%- e %></a></li>
         <% }) %>
       </ul>
       <div class="tab-content tab-content-styled">
         <% events.forEach(function(e, i) { %>
-          <div class="tab-pane <%- i === 0 ? 'active' : '' %>" id="<%- e.toLowerCase() %>-panel" >
+          <div class="tab-pane fade <%- i === 0 ? 'show active' : '' %>" id="<%- e.toLowerCase() %>-panel" >
             <div class="editor-container">
               <div id="on<%- e %>"></div>
             </div>
@@ -146,7 +113,6 @@
       </div>
     </script>
 
-    <!-- Load vendored modern libs locally -->
     <script type="text/javascript" src="/dashboard/js/lib/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="/dashboard/js/lib/jquery.cookie-1.4.1.min.js"></script>
     <script type="text/javascript" src="/dashboard/js/lib/underscore-1.13.6.min.js"></script>
@@ -169,32 +135,6 @@
 
     <? }); ?>
 
-    <!-- Keyboard Shortcuts Modal -->
-    <div class="modal fade" id="shortcut-help" tabindex="-1" aria-labelledby="shortcutHelpLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="shortcutHelpLabel"><i class="bi bi-keyboard me-2"></i>Keyboard Shortcuts</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              <li><strong>/</strong>: Focus resource filter</li>
-              <li><strong>j</strong>/<strong>k</strong>: Navigate visible resources</li>
-              <li><strong>Enter</strong>: Open highlighted resource</li>
-              <li><strong>?</strong>: Show this help</li>
-              <li><strong>Esc</strong>: Close dialogs</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
   </body>
 </html>
-
-
