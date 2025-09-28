@@ -3,29 +3,113 @@
   <head>
     <title>Deployd Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- <link rel='stylesheet/less' type="text/css" href='/dashboard/stylesheets/style.less' /> -->
-    <!-- <script type="text/javascript" src="/dashboard/js/lib/less-1.3.0.min.js"></script> -->
     <link rel='stylesheet' type="text/css" href='/dashboard/stylesheets/style.css' />
     <link href='https://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
+    <style>
+      body {
+        background: radial-gradient(circle at top, rgba(var(--bs-primary-rgb), 0.12) 0%, rgba(var(--bs-primary-rgb), 0) 55%), #0f172a;
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      .auth-modal .modal-dialog {
+        max-width: 440px;
+      }
+
+      .auth-modal .modal-content {
+        border-radius: 1.5rem;
+        border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+        box-shadow: 0 1.5rem 3.5rem rgba(15, 23, 42, 0.35);
+        overflow: hidden;
+      }
+
+      .auth-modal .modal-header {
+        border: 0;
+        padding-bottom: 0;
+      }
+
+      .auth-modal .modal-title {
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(var(--bs-primary-rgb), 0.8);
+      }
+
+      .auth-modal .modal-body {
+        padding-top: 0.5rem;
+      }
+
+      .auth-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: rgba(var(--bs-primary-rgb), 0.14);
+        color: var(--bs-primary);
+        font-weight: 700;
+        font-size: 1rem;
+      }
+
+      .auth-body-copy {
+        color: rgba(15, 23, 42, 0.7);
+      }
+
+      .auth-tip {
+        background: rgba(148, 163, 184, 0.12);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        color: rgba(15, 23, 42, 0.65);
+      }
+
+      .auth-modal textarea {
+        resize: vertical;
+        min-height: 140px;
+      }
+
+      .auth-modal .modal-footer {
+        border: 0;
+        padding-top: 0;
+      }
+
+      .auth-modal .modal-footer .btn {
+        border-radius: 999px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+      }
+    </style>
   </head>
   <body>
-
-    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <div class="modal fade auth-modal" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="authModalLabel">Deployd Dashboard</h5>
+            <span class="modal-title" id="authModalLabel">Deployd Dashboard</span>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="alert alert-danger hide" id="error">That key is invalid</div>
-            <div class="alert alert-info">Use <code>dpd showkey</code> to get your app's key.</div>
-            <p>Authenticate with your deployd dashboard:</p>
-            <label class="form-label">Authentication key:</label>
-            <textarea class="form-control" rows="6" name="key"></textarea>
+            <div class="text-center mb-4">
+              <div class="auth-badge">DP</div>
+              <h1 class="h4 fw-semibold mt-3 mb-2">Sign in with your key</h1>
+              <p class="auth-body-copy mb-0">Paste your Deployd dashboard key to securely access your project controls.</p>
+            </div>
+            <div class="alert alert-danger hide" id="error">That key is invalid. Please check the value and try again.</div>
+            <label for="auth-key" class="form-label fw-semibold">Authentication key</label>
+            <textarea class="form-control" id="auth-key" rows="6" name="key" placeholder="Paste key here"></textarea>
+            <div class="auth-tip mt-3">
+              <strong>Quick tip:</strong> Run <code>dpd showkey</code> in your project folder to copy the current dashboard key.
+            </div>
           </div>
-          <div class="modal-footer">
-            <a href="#" class="btn btn-primary save">Authenticate</a>
+          <div class="modal-footer flex-column gap-2">
+            <a href="#" class="btn btn-primary w-100 save">Authenticate</a>
+            <p class="text-muted small mb-0">We never store your key. It stays in your browser only.</p>
           </div>
         </div>
       </div>
@@ -35,6 +119,7 @@
     <script type="text/javascript" src="/dashboard/js/lib/jquery.cookie-1.4.1.min.js"></script>
     <script type="text/javascript" src="/dpd.js"></script>
     <script type="text/javascript" src="/dashboard/js/lib/bootstrap-5.3.3.bundle.min.js"></script>
+    <script type="text/javascript" src="/dashboard/js/lib/bootstrap5-jquery-shim.js"></script>
     <script type="text/javascript" src="/dashboard/js/auth.js"></script>
     <script>
       // Auto-show the auth modal using Bootstrap 5 when page loads
@@ -50,3 +135,4 @@
     </script>
   </body>
 </html>
+
