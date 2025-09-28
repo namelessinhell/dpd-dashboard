@@ -179,3 +179,21 @@
 
 
 
+(function($){
+  if(!$) return;
+  if(!$.fn.bind){
+    $.fn.bind = function(types, data, fn){ return this.on(types, data, fn); };
+  }
+  if(!$.fn.unbind){
+    $.fn.unbind = function(types, fn){ return this.off(types, fn); };
+  }
+  if(!$.fn.delegate){
+    $.fn.delegate = function(selector, types, data, fn){ return this.on(types, selector, data, fn); };
+  }
+  if(!$.fn.undelegate){
+    $.fn.undelegate = function(selector, types, fn){ return selector ? this.off(types, selector, fn) : this.off(types); };
+  }
+  if(!$.fn.size){
+    $.fn.size = function(){ return this.length; };
+  }
+})(window.jQuery);

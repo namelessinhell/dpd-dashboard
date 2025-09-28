@@ -3,6 +3,7 @@
   <head>
     <title>Deployd Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-5.3.3.min.css" />
     <link rel='stylesheet' type="text/css" href='/dashboard/stylesheets/style.css' />
     <link href='https://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
     <style>
@@ -100,7 +101,7 @@
               <h1 class="h4 fw-semibold mt-3 mb-2">Sign in with your key</h1>
               <p class="auth-body-copy mb-0">Paste your Deployd dashboard key to securely access your project controls.</p>
             </div>
-            <div class="alert alert-danger hide" id="error">That key is invalid. Please check the value and try again.</div>
+            <div class="alert alert-danger d-none" id="error">That key is invalid. Please check the value and try again.</div>
             <label for="auth-key" class="form-label fw-semibold">Authentication key</label>
             <textarea class="form-control" id="auth-key" rows="6" name="key" placeholder="Paste key here"></textarea>
             <div class="auth-tip mt-3">
@@ -135,4 +136,5 @@
     </script>
   </body>
 </html>
+
 
