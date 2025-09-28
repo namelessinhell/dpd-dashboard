@@ -5,6 +5,7 @@
 ko.bindingHandlers.sortable = {
   init: function(element, valueAccessor, allBindings, viewModel) {
     var properties = valueAccessor();
+    if (typeof $.fn.sortable !== 'function') { console.warn('jQuery UI sortable unavailable; skipping drag reorder.'); return; }
     $(element).sortable({
         placeholder: 'placeholder'
       , cancel: "input"
@@ -343,3 +344,6 @@ function create() {
 create();
 
 })();
+
+
+
