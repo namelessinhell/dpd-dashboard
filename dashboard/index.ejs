@@ -55,7 +55,7 @@
             </div>
           </div>
           <div id="resources-empty" class="alert alert-info hide">Add a resource to get started</div>
-          <ul class="nav nav-stacked type-icons" id="resource-sidebar">
+          <ul class="nav nav-stacked flex-column type-icons" id="resource-sidebar">
           </ul>
         </div>
       </div>
@@ -95,7 +95,7 @@
           </a>
           <a href="#" class="options" data-bs-title="Resource actions"><i class="bi bi-caret-down-fill"></i></a>
           <% if (type && type.dashboardPages) { %>
-            <ul class="nav pages type-icons <%= isCurrent ? '' : 'hide' %>">
+            <ul class="nav flex-column pages type-icons <%= isCurrent ? '' : 'hide' %>">
               <% type.dashboardPages.forEach(function(p) { %>
                 <% var pl = p.toLowerCase(); var pi = 'file-earmark-text';
                    if (pl === 'events') pi = 'lightning';
@@ -195,4 +195,5 @@
 
   </body>
 </html>
+
 

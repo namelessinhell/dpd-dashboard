@@ -269,7 +269,7 @@ $(document).ready(function() {
   function renderSidebar() {
     if (!resourceTypes || !resources) return;
 
-    $('#resource-sidebar-container > .hide').show();
+    $('#resource-sidebar-container > .hide').removeClass('hide d-none').show();
 
     var $sidebar = $('#resource-sidebar').empty();
 
@@ -331,7 +331,7 @@ $(document).ready(function() {
 
 
     } else {
-      $('#resources-empty').show();
+      $('#resources-empty').removeClass('hide d-none').show();
     }
   }
 

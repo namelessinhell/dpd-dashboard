@@ -27,7 +27,7 @@ dpd('__resources').get(Context.resourceId, function(res, err) {
         update(true);
       }
     });
-    $('#default-editor').show();
+    $('#default-editor').removeClass('hide d-none').show();
   }
 });
 

@@ -65,6 +65,22 @@ p a {
 
 // Sidebar polish: active, hover, and keyboard focus
 #resource-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    width: 100%;
+  }
+
+  ul.pages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.35rem;
+    padding-left: 1.75rem;
+  }
+
   li.resource > a {
     display: block;
     padding: 6px 8px;
@@ -1039,3 +1055,4 @@ pre {
     padding-bottom: 0;
   }
 }
+

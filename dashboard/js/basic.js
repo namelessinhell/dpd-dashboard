@@ -30,7 +30,7 @@ function createForm() {
     $('#save-button-container').before($prop);
   });
 
-  $('#basic-dashboard').show();
+  $('#basic-dashboard').removeClass('hide d-none').show();
   $('#basic-dashboard input').first().focus();
 }
 
