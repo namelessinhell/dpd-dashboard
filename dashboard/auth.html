@@ -4,6 +4,7 @@
     <title>Deployd Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-5.3.3.min.css" />
+    <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-icons.css" />
     <link rel='stylesheet' type="text/css" href='/dashboard/stylesheets/style.css' />
     <link href='https://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
   </head>
@@ -17,11 +18,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="alert alert-error hide d-none" id="error">That key is invalid</div>
+            <div class="alert alert-danger d-none" id="error">That key is invalid</div>
             <div class="alert alert-info">Use <code>dpd showkey</code> to get your app's key.</div>
             <p>Authenticate with your deployd dashboard:</p>
             <form>
-              <label>Authentication key: <textarea class="full-width" rows="6" name="key"></textarea></label>
+              <div class="mb-3">
+                <label class="form-label" for="auth-key-input">Authentication key</label>
+                <textarea class="form-control" rows="6" name="key" id="auth-key-input"></textarea>
+              </div>
             </form>
           </div>
           <div class="modal-footer">

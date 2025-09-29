@@ -25,7 +25,7 @@ $(document).ready(function() {
     var $items = $('#resource-sidebar li.resource');
     if (!q) { $items.show(); return; }
     $items.each(function() {
-      var $a = $(this).find('> a').first();
+      var $a = $(this).find('.resource-link').first();
       var text = ($a.text() || '').toLowerCase().replace(/\s+/g, ' ').trim();
       $(this).toggle(text.indexOf(q) !== -1);
     });
@@ -71,7 +71,7 @@ $(document).ready(function() {
       if (index >= 0 && index < $items.length) {
         var $el = $($items.get(index));
         $el.addClass('nav-focus');
-        var top = $el.position().top, cont = $('#resource-sidebar-container .well');
+        var top = $el.position().top, cont = $('#resource-sidebar-panel');
         if (top < 0 || top > cont.height() - 40) {
           cont.scrollTop(cont.scrollTop() + top - 20);
         }
@@ -114,7 +114,7 @@ $(document).ready(function() {
           var idx3 = currentIndex();
           if (idx3 >= 0) {
             e.preventDefault();
-            var href = $($items.get(idx3)).find('> a').attr('href');
+            var href = $($items.get(idx3)).find('.resource-link').attr('href');
             if (href) { window.location.href = href; }
           }
           return;
@@ -269,7 +269,7 @@ $(document).ready(function() {
   function renderSidebar() {
     if (!resourceTypes || !resources) return;
 
-    $('#resource-sidebar-container > .hide').removeClass('hide d-none').show();
+    $('#resource-sidebar-panel').removeClass('d-none');
 
     var $sidebar = $('#resource-sidebar').empty();
 
@@ -288,7 +288,7 @@ $(document).ready(function() {
         return 0;
       });
 
-      $('#resources-empty').hide();
+      $('#resources-empty').addClass('d-none').hide();
 
       resourceTypesList.forEach(function(type) {
         var $el = $(resourceSidebarTemplate({type: type}));
@@ -311,7 +311,11 @@ $(document).ready(function() {
             location.href = $(this).attr('href');
           }).click(function(e) {
             if (e.which === 2) { return true; }
-            $el.find('.pages').slideToggle(200);
+            var $pages = $el.find('.pages');
+            if ($pages.length) {
+              $pages.removeAttr('style');
+              $pages.toggleClass('d-none');
+            }
             return false;
           });
 
@@ -331,7 +335,7 @@ $(document).ready(function() {
 
 
     } else {
-      $('#resources-empty').removeClass('hide d-none').show();
+      $('#resources-empty').removeClass('d-none').show();
     }
   }
 
@@ -416,3 +420,11 @@ $(document).ready(function() {
     ui.error(message, errMessage).sticky().effect('slide');
   }
 });
+
+
+
+
+
+
+
+

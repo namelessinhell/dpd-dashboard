@@ -9,7 +9,7 @@ $(document).ready(function() {
   if (Context.events && $eventEditor && $eventEditor.is('.default-editor')) {
     var template = _.template($('#event-editor-template').html());
     $eventEditor.html(template({ events: Context.events }));
-    $eventEditor.removeClass('hide d-none').show();
+    $eventEditor.removeClass('d-none').show();
     createEditors();
     loadEvents();
   }
@@ -40,7 +40,7 @@ $(document).ready(function() {
             }
         });
       });
-      $('#events').removeClass('hide d-none').show();
+      $('#events').removeClass('d-none').show();
       $('#event-nav a').click(function(e) {
         var href = $(this).attr('href')
           , editor = $(this).attr('data-editor');

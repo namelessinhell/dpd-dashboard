@@ -30,7 +30,7 @@ function createForm() {
     $('#save-button-container').before($prop);
   });
 
-  $('#basic-dashboard').removeClass('hide d-none').show();
+  $('#basic-dashboard').removeClass('d-none').show();
   $('#basic-dashboard input').first().focus();
 }
 
@@ -88,3 +88,4 @@ dpd('__resources').get(Context.resourceId, function(res, err) {
 });
 
 })();
+

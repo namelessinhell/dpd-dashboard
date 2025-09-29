@@ -6,6 +6,7 @@
     <!-- <link rel='stylesheet/less' type="text/css" href='/dashboard/stylesheets/style.less' /> -->
     <!-- <script type="text/javascript" src="/dashboard/js/lib/less-1.3.0.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-5.3.3.min.css" />
+    <link rel="stylesheet" type="text/css" href="/dashboard/css/bootstrap-icons.css" />
     <link rel='stylesheet' type="text/css" href='/dashboard/stylesheets/style.css?<?- version ?>' />
     <link href='//fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
     <? if (css) { ?>
@@ -22,31 +23,32 @@
       <h1></h1>
       <div class="seperator">&nbsp;</div>
       <div class="btn-group" id="open-btn-group">
-        <a class="btn" href="#" id="open-btn" target="_blank"><i class="icon-eye-open"></i> Open</a>
-        <!-- <button class="btn dropdown-toggle"><span class="caret"></span></button> -->
+        <a class="btn btn-outline-light btn-sm d-inline-flex align-items-center gap-1" href="#" id="open-btn" target="_blank">
+          <i class="bi bi-eye"></i>
+          <span>Open</span>
+        </a>
       </div>
       <!-- <div class="btn-group" id="deploy-btn-group">
         <button class="btn"><i class="icon-upload"></i> Deploy</button>
-        <button class="btn dropdown-toggle"><span class="caret"></span></button>
-      </div> -->
     </div>
     <div id="body-container">
       <div id="resource-sidebar-container"> 
-        <div class="well hide">
-          <div class="section-header">
+        <div class="dpd-panel d-none" id="resource-sidebar-panel">
+          <div class="section-header align-items-center">
             <h3>Resources</h3>
             <div class="btn-group">
-              <a class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                <i class="icon-white icon-plus"></i>
-                &nbsp;<span class="caret"></span>
-              </a>
-              <ul id="resource-types" class="dropdown-menu">
-              </ul>
+              <button class="btn btn-success btn-sm dropdown-toggle d-inline-flex align-items-center gap-1"
+                      type="button"
+                      id="add-resource-button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                <i class="bi bi-plus-lg"></i>
+              </button>
+              <ul id="resource-types" class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="add-resource-button"></ul>
             </div>
           </div>
-          <div id="resources-empty" class="alert alert-info hide">Add a resource to get started</div>
-          <ul class="nav nav-stacked type-icons" id="resource-sidebar">
-          </ul>
+          <div id="resources-empty" class="alert alert-info d-none">Add a resource to get started</div>
+          <ul class="nav nav-pills flex-column type-icons" id="resource-sidebar"></ul>
         </div>
       </div>
       <div id="main-container">
@@ -58,39 +60,54 @@
 
     <script type="text/html" id="resource-sidebar-template">
       <% if(type) { %>
-        <li class="group-type"><%- type.label || type.type %></span>
+        <li class="group-type text-uppercase text-muted small fw-semibold"><%- type.label || type.type %></li>
       <% } else { %>
-        <% var type = types[resource.type]; %>
-        <% var isCurrent = resource.id === Context.resourceId %>
-
-        <li class="resource" <%= isCurrent ? 'class="active"' : '' %>>
-          <a href="/dashboard/<%= resource.id %>" <%= type && type.dashboardPages ? 'class="pages-header"' : '' %>>
-            <i class="icon-white icon-custom <%- resource.type.toLowerCase() %>"></i>&nbsp;
-            <% resource.id.split('/').forEach(function(part, index) { %>
-              <span><%- part %></span>
-              <% if(index !== resource.id.split('/').length - 1) { %>
-                <span class="res-separator"> / </span>
-              <% } %>
-            <% }); %>
-          </a>
-          <a href="#" class="options"><span class="caret"></span></a>
-          <% if (type && type.dashboardPages) { %>
-            <ul class="nav pages type-icons <%= isCurrent ? '' : 'hide' %>">
-              <% type.dashboardPages.forEach(function(p) { %>
-                <li <%- isCurrent && (Context.page || '').toLowerCase() === p.toLowerCase() ? 'class=active' : ''%>  ><a href="/dashboard/<%= resource.id %>/<%= p.toLowerCase() %>/"><i class="icon-white icon-custom <%= p.toLowerCase() %>"></i> <%= p %></a></li>
+        <% var typeDef = types[resource.type]; %>
+        <% var isCurrent = resource.id === Context.resourceId; %>
+        <li class="resource <%= isCurrent ? 'active' : '' %>">
+          <div class="resource-entry d-flex align-items-center justify-content-between gap-2">
+            <a href="/dashboard/<%= resource.id %>" class="resource-link d-flex align-items-center flex-wrap gap-2 <%= typeDef && typeDef.dashboardPages ? 'pages-header' : '' %>">
+              <i class="icon-custom" data-icon="<%- resource.type.toLowerCase() %>"></i>
+              <span class="resource-path d-flex align-items-center flex-wrap gap-1">
+                <% resource.id.split('/').forEach(function(part, index) { %>
+                  <span><%- part %></span>
+                  <% if(index !== resource.id.split('/').length - 1) { %>
+                    <span class="res-separator text-muted">/</span>
+                  <% } %>
+                <% }); %>
+              </span>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-light options" aria-label="Resource options">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </div>
+          <% if (typeDef && typeDef.dashboardPages) { %>
+            <ul class="nav nav-pills flex-column pages type-icons <%= isCurrent ? '' : 'd-none' %>">
+              <% typeDef.dashboardPages.forEach(function(p) { 
+                   var lower = p.toLowerCase();
+                   var pageActive = isCurrent && (Context.page || '').toLowerCase() === lower;
+              %>
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2 <%= pageActive ? 'active' : '' %>" href="/dashboard/<%= resource.id %>/<%= lower %>/">
+                    <i class="icon-custom" data-icon="<%= lower %>"></i>
+                    <span><%= p %></span>
+                  </a>
+                </li>
               <% }); %>
             </ul>
           <% } %>
-        <% } %>
-      </li>
+        </li>
+      <% } %>
     </script>
 
     <script type="text/html" id="resource-types-template">
-      <% types.forEach(function(type) { %>
+      <% types.forEach(function(type) { 
+           var iconKey = (type.id || type.type || '').toLowerCase();
+      %>
          <li>
-          <a href="#" data-id="<%= type.id %>">
-            <i class="<%= (type.label || type.type).toLowerCase().replace(' ', '-') %> icon-custom"></i>
-            <%- type.label || type.type %>
+          <a href="#" data-id="<%= type.id %>" class="dropdown-item d-flex align-items-center gap-2">
+            <i class="icon-custom" data-icon="<%- iconKey %>"></i>
+            <span><%- type.label || type.type %></span>
           </a>
          </li>
       <% }); %>
@@ -138,3 +155,6 @@
 
   </body>
 </html>
+
+
+

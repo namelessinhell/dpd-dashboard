@@ -289,7 +289,7 @@ function create() {
 
       subscribe();
 
-      $('#properties').removeClass('hide d-none').show();
+      $('#properties').removeClass('d-none').show();
 
     });
   }
@@ -336,7 +336,7 @@ function create() {
   fetchProperties();
 
   ko.applyBindings(vm);
-  $('#property-now-what').removeClass('hide d-none');
+  $('#property-now-what').removeClass('d-none');
 
   return vm;
 }
@@ -344,6 +344,7 @@ function create() {
 create();
 
 })();
+
 
 
 

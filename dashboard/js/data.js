@@ -838,8 +838,8 @@
   loadProperties(function(props) {
     $('#data').css('visibility', 'visible');
     if (props) {
-      $('#no-property-warning').addClass('hide d-none').hide();
-      $('#table-container').removeClass('hide d-none').show();
+      $('#no-property-warning').addClass('d-none').hide();
+      $('#table-container').removeClass('d-none').show();
       ko.applyBindings(vm);
       vm.newRow = createNewRow();
       vm.selectedRow(vm.newRow);
@@ -863,7 +863,7 @@
         loadCount();
       });
     } else {
-      $('#no-property-warning').removeClass('hide d-none').show();
+      $('#no-property-warning').removeClass('d-none').show();
       $('#table-container').hide();
     }
 
@@ -874,4 +874,5 @@
   }
 
 })();
+
 

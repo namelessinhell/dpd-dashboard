@@ -3,7 +3,7 @@ $(document).ready(function() {
   $('.save').on('click', function(e) {
     e.preventDefault();
     var $error = $('#error');
-    $error.addClass('hide d-none');
+    $error.addClass('d-none');
     var key = $.trim($('textarea[name=key]').val());
 
     $.cookie('DpdSshKey', key);
@@ -18,9 +18,10 @@ $(document).ready(function() {
       if (res && res.isRoot) {
         window.location.reload();
       } else {
-        $error.removeClass('hide d-none');
+        $error.removeClass('d-none');
       }
     });
   });
 
 });
+

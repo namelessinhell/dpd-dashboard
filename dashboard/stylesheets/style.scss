@@ -51,20 +51,28 @@ p a {
   margin-left: 0;
 }
 
-.well {
+.dpd-panel {
   margin-bottom: 0;
 }
 
-.well.stacked {
+.dpd-panel.stacked {
   margin-bottom: 20px;
 }
+.well {
+  @extend .dpd-panel;
+}
+
 
 .resource-list .container {
   width: 443px;
 }
 
 // Sidebar polish: active, hover, and keyboard focus
-#resource-sidebar {
+#resource-sidebar,
+#pre-resource-sidebar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -73,37 +81,168 @@ p a {
     width: 100%;
   }
 
-  ul.pages {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    margin-top: 0.35rem;
+  li.group-type {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: lighten($bodyBackground, 15%);
   }
 
-  li.resource > a {
-    display: block;
-    padding: 6px 8px;
-    border-left: 3px solid transparent;
-    transition: background .15s ease, color .15s ease, border-left-color .15s ease;
+  li.resource {
+    border-radius: 0.5rem;
+    background: rgba($black, 0.35);
+    color: lighten($bodyBackground, 10%);
+    transition: background .15s ease, color .15s ease;
+
+    .resource-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-left: 3px solid transparent;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .resource-path {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .res-separator {
+      opacity: 0.6;
+    }
+
+    .options {
+      opacity: 0;
+      color: lighten($bodyBackground, 30%);
+      transition: opacity .15s ease, color .15s ease;
+    }
+
+    &:hover .resource-entry,
+    &.active .resource-entry,
+    &.nav-focus .resource-entry {
+      color: $bodyBackground;
+    }
+
+    &:hover .resource-entry {
+      background: lighten($black, 5%);
+    }
+
+    &:hover .options,
+    .options:focus-visible {
+      opacity: 1;
+      color: $bodyBackground;
+    }
+
+    &.active .resource-entry {
+      border-left-color: $blue;
+      background: lighten($black, 7%);
+      font-weight: 600;
+    }
+
+    &.nav-focus .resource-entry {
+      border-left-color: lighten($blue, 10%);
+      background: lighten($black, 9%);
+    }
+
+    .resource-entry:focus-within {
+      outline: 2px solid $blue;
+      outline-offset: 2px;
+    }
   }
-  li.resource > a:hover {
-    background: lighten($black, 5%);
+
+  ul.pages {
+    margin: 0.25rem 0 0.5rem 1.5rem;
+    padding: 0.5rem 0 0.5rem 0.75rem;
+    border-left: 1px solid rgba($bodyBackground, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  ul.pages .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: lighten($bodyBackground, 10%);
+    font-size: 0.85rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.35rem;
+    background: transparent;
+    transition: background .15s ease, color .15s ease;
+  }
+  ul.pages .nav-link:hover {
+    background: rgba($white, 0.08);
     color: $bodyBackground;
   }
-  li.resource.active > a {
-    border-left-color: $blue;
-    background: lighten($black, 7%);
-    color: $bodyBackground;
-    font-weight: bold;
+  ul.pages .nav-link.active {
+    background: lighten($black, 12%);
+$dashboard-icon-map: (
+  fallback: "\f2cc",
+  collection: "\f2cc",
+  "users-collection": "\f4cf",
+  usercollection: "\f4cf",
+  "user-collection": "\f4cf",
+  api: "\f2ee",
+  array: "\f478",
+  boolean: "\f5d6",
+  data: "\f8c4",
+  date: "\f1e8",
+  events: "\f46d",
+  files: "\f38b",
+  static: "\f38b",
+  number: "\f67f",
+  object: "\f1c9",
+  password: "\f44f",
+  properties: "\f473",
+  string: "\f3da",
+  basic: "\f56b",
+  default: "\f352"
+);
+
+.icon-custom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 0.35rem;
+  font-size: 0.95rem;
+  color: $bodyBackground;
+  background: rgba($white, 0.1);
+  line-height: 1;
+  &::before {
+    font-family: "bootstrap-icons";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    display: inline-block;
+    content: map-get($dashboard-icon-map, fallback);
   }
-  li.resource.nav-focus > a {
-    border-left-color: lighten($blue, 10%);
-    background: lighten($black, 9%);
-    color: $bodyBackground;
+}
+
+.icon-custom[data-icon] {
+  color: inherit;
+}
+
+@each $name, $glyph in $dashboard-icon-map {
+  .icon-custom[data-icon='#{$name}']::before {
+    content: $glyph;
   }
-  li.resource > a:focus-visible {
-    outline: 2px solid $blue;
-    outline-offset: 2px;
+}
+
+    color: $bodyBackground;
   }
 }
 
@@ -121,7 +260,7 @@ p a {
 
 // DARK CHANGES
 .panel,
-.well {
+.dpd-panel {
   background: rgba(255, 255, 247, 0.05);
   box-shadow: none;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .25);
@@ -145,7 +284,7 @@ a:focus {
 
 // Dark containers
 .panel,
-.well,
+.dpd-panel,
 .notification,
 #events,
 #default-editor,
@@ -213,7 +352,7 @@ input:focus-visible {
 // Respect system high-contrast preference
 @media (prefers-contrast: more) {
   a { color: lighten($blue, 35%); }
-  .panel, .well, .notification { border-color: #666; }
+  .panel, .dpd-panel, .notification { border-color: #666; }
   input, textarea, select { border-color: #666; }
 }
 
@@ -284,7 +423,7 @@ input:focus-visible {
 }
 .tooltip .tooltip-arrow::before { border-bottom-color: #222 !important; }
 
-.well {
+.dpd-panel {
   padding: 10px 20px 20px;
 }
 
@@ -339,110 +478,22 @@ td {
 
 // END DARK
 #resource-sidebar,
-#pre-resource-sidebar {
-  min-width: 150px;
-  i {
-    position: relative;
-    top: -2px;
-  }
-  margin-bottom: 0;
-  border-radius: 10px 10px 10px 10px;
-  li {
-    position: relative;
-    padding: 10px;
-    box-shadow: inset 3px 3px 40px rgba(0, 0, 0, .37);
-    margin-bottom: 0px;
-    border-top: solid 1px darken($black, 10%);
-    border-left: solid 1px darken($black, 10%);
-    border-bottom: solid 1px darken($black, 20%);
-    border-right: solid 1px darken($black, 20%);
-    .options {
-      visibility: hidden;
-      position: absolute;
-      right: 8px;
-      top: 9px;
-      padding: 8px;
-      &:hover .caret {
-        border-top-color: #ffffff;
-      }
-      .caret {
-        border-top-color: #838181;
-        opacity: 1;
-      }
-    }
-    &:hover .options {
-      visibility: visible;
-    }
-    li {
-      i {
-        position: relative;
-        top: -1px;
-      }
-      padding: 5px;
-      box-shadow: none;
-      background: rgba(0, 0, 0, 0.3);
-      margin-left: 14px;
-      margin-right: 14px; // text-align: center;
-    }
-
-    &.group-type {
-      color: white;
-      box-shadow: inset 3px 3px 40px rgba(0, 0, 0, .37);
-      background-color: #1a1a1a;
-    }
-  }
-  a {
-    font-weight: bold;
-    font-size: 10px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: lighten($black, 30%);
-    i {
-      opacity: 0.5;
-    }
-    &:hover {
-      background: none !important;
-    }
-  }
-  li.active {
-    background: rgba(255, 255, 255, 0.05);
-  }
-  li.active>a {
-    color: $bodyBackground;
-    i {
-      opacity: 1;
-    }
-  }
-  >li.active>a {
-    display: block;
-  }
-  ul {
-    margin-top: 10px;
-  }
-  .nav {
-    margin-bottom: 0;
-  }
-  .res-separator {
-    color: white;
-    margin: 0px 2px;
-  }
-}
 
 #sidebar-well {
   background: none;
 }
 
-.right-sidebar .well {
+.right-sidebar .dpd-panel {
   position: absolute;
   top: 0;
   width: 195px;
 }
 
-.right-sidebar .well input {
+.right-sidebar .dpd-panel input {
   width: 185px;
 }
 
-.right-sidebar .well+.well {
+.right-sidebar .dpd-panel+.dpd-panel {
   margin-top: 10px;
   top: 165px;
   bottom: 0;
@@ -594,7 +645,7 @@ li.component-type-item {
       top: 0;
       overflow-y: hidden;
     }
-    .well {
+    .dpd-panel {
       overflow-y: auto;
     }
     .bottom-panel {
@@ -931,7 +982,7 @@ table input {
 }
 
 .get-started {
-  @extend .well;
+  @extend .dpd-panel;
   background: $black;
   color: $bodyBackground;
 }
@@ -1054,4 +1105,5 @@ pre {
     padding-bottom: 0;
   }
 }
+
 

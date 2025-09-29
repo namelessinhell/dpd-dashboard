@@ -102,13 +102,13 @@ body {
   }
 }
 
-#main-container .well.full-page {
+#main-container .dpd-panel.full-page {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   box-flex: 1;
 }
 
-.well h3 {
+.dpd-panel h3 {
   height: 28px;
   line-height: 28px;
   margin-top: 0;
@@ -137,3 +137,4 @@ body {
     width: 250px;
   }
 }
+

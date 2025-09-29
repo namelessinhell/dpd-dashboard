@@ -28,8 +28,8 @@
   "homepage": "https://github.com/deployd/dpd-dashboard",
   "main": "dashboard.js",
   "scripts": {
-    "prepare": "sass --quiet-deps dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
-    "build:css": "sass --quiet-deps dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
+    "prepare": "node node_modules/sass/sass.js --quiet-deps dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
+    "build:css": "node node_modules/sass/sass.js --quiet-deps dashboard/stylesheets/style.scss dashboard/stylesheets/style.css",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "standard-version"
   },
@@ -40,3 +40,4 @@
   ],
   "license": "MIT"
 }
+
